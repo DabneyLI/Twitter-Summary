@@ -61,7 +61,7 @@ def sumTweets(lang = '中文',length:int = 10000, model='openai/gpt-3.5-turbo-11
         rss_url = f'https://{nitter}/{user}/rss'
         feed = parse(rss_url)
         df = pd.json_normalize(feed.entries)
-        df['timestamp'] = df['published'].apply(lambda x: pd.Timestamp(x).timestamp())
+        df['timestamp'] = df.apply(lambda x: pd.Timestamp(x.get('published', '1970-01-01')).timestamp(), axis=1)
         if not 'i/lists' in user:
             df = df.reindex(index=df.index[::-1])
         compareTime = datetime.utcnow() - timedelta(minutes=minutes)
