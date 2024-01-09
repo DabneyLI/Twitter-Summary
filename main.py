@@ -98,7 +98,7 @@ def sumTweets(lang = '中文',length:int = 10000, model='openai/gpt-3.5-turbo-11
             'id'].str.replace(nitter, 'x.com') + '): ' + df['summary']
         # df.to_csv('test.csv', index=False)
         tweets = df['content'].to_csv().replace(nitter, 'x.com')[:length]
-        prompt =  f"<tweets>{tweets}</tweets>\n以上是一些推，你是一名{lang}专栏『{info}最新资讯』的资深作者，请在以上推中，挑选出和『{info}』相关信息(若有)的推,汇编成一篇用markdown排版的{lang}文章，包含发推时间、作者(若有)、推特链接(若有)和推特内容以及你的解读和评论，如果没有{info}相关资讯请回复『NOT FOUND』"
+        prompt =  f"<tweets>{tweets}</tweets>\n以上是一些推，你是一名{lang}专栏『{info}最新资讯』的资深作者，请在以上推中，挑选出和『{info}』相关信息(若有)的推,汇编成一篇用markdown排版的{lang}文章，包含发推时间、作者(若有)、推特链接(若有)和推特内容以及你的解读和评论，解读与评论中需要包含下面5条内容：第一，数据分析：分析这些推文的趋势、热点话题、常见关键词等。第二，情感分析：判断这些推文的总体情绪是积极、消极还是中性。第三，摘要和归纳：提供这些推文内容的摘要，突出主要话题和观点。第四，可视化展示：制作图表或其他可视化内容，展示这些推文的统计数据。第五，进阶分析：进行更深入的分析，比如社区网络分析，了解影响力较大的账户或推文。，如果没有{info}相关资讯请回复『NOT FOUND』"
         print('tweets:', prompt)
         if not 'NOT FOUND' in result:
             result = result + '\n##%s\n\n'%user + completion(model=model, messages=[{"role": "user", "content": prompt, }], api_key=os.environ['OPENAI_API_KEY'],
