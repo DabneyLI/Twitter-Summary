@@ -3,7 +3,8 @@ name: Main Workflow
 on:
   schedule:
     - cron: '*/20 * * * *'
-
+  workflow_dispatch:  # 添加这行来启用手动触发
+  
 jobs:
   build:
     runs-on: ubuntu-latest
