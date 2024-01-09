@@ -34,10 +34,11 @@ def sendEmail(message:str,receiver:str=os.environ['MAILTO'],subject:str=''):
     msg['from'] = sender    #自己的邮件地址
     smtp = smtplib.SMTP()
     try :
-        smtp.connect(smtpserver) # 链接
+        # smtp.connect(smtpserver) # 链接
+
+        smtp = smtplib.SMTP_SSL(smtpserver, 465) # 使用 SSL
+        # smtp.starttls() # 如果使用 TLS，取消注释这行
         print('链接成功')
-        print('{username}')
-        print('{password}')
         smtp.login(username, password) # 登陆
         print('登陆成功')
         smtp.sendmail(sender, receiver, msg.as_string()) #发送
@@ -61,7 +62,7 @@ def sumTweets(lang = '中文',length:int = 10000, model='openai/gpt-3.5-turbo-11
     nitter:str = os.environ['NITTER']
     minutes:int = int(float(os.environ['MINS']))
     result = ''
-    sendEmail(result)
+
     for user in users.split(';'):
         rss_url = f'https://{nitter}/{user}/rss'
         feed = parse(rss_url)
