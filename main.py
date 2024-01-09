@@ -32,12 +32,11 @@ def sendEmail(message:str,receiver:str=os.environ['MAILTO'],subject:str=''):
     msg = MIMEText(message,'html','utf-8') #中文需参数‘utf-8'，单字节字符不需要
     msg['Subject'] = Header(subject, 'utf-8') #邮件主题
     msg['from'] = sender    #自己的邮件地址
-    smtp = smtplib.SMTP()
+    # smtp = smtplib.SMTP()
+    smtp = smtplib.SMTP_SSL(smtpserver, 465) # 使用 SSL
+    # smtp.starttls() # 如果使用 TLS，取消注释这行
     try :
-        # smtp.connect(smtpserver) # 链接
-
-        smtp = smtplib.SMTP_SSL(smtpserver, 465) # 使用 SSL
-        # smtp.starttls() # 如果使用 TLS，取消注释这行
+        smtp.connect(smtpserver) # 链接
         print('链接成功')
         smtp.login(username, password) # 登陆
         print('登陆成功')
