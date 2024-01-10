@@ -92,8 +92,8 @@ def sumTweets(lang='中文', length:int=10000, model='openai/gpt-3.5-turbo-1106'
         json.dump(all_tweets, file, ensure_ascii=False)
 
     # 检查内容是否有更新并上传到GitHub
-    if is_content_updated(filename, "your_repository_name", os.environ['GH_TOKEN']):
-        upload_to_github(filename, "your_repository_name", os.environ['GH_TOKEN'])
+    if is_content_updated(filename, "Twitter-Summary", os.environ['GH_TOKEN']):
+        upload_to_github(filename, "Twitter-Summary", os.environ['GH_TOKEN'])
 
     # 如果邮件内容不为空，则发送邮件
     if mail and len(result) > 0:
