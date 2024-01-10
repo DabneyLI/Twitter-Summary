@@ -6,3 +6,4 @@ litellm
 pandas
 bs4
 setuptools
+PyGithub
